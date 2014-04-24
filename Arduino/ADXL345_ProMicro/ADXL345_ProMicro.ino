@@ -7,6 +7,8 @@ ADXL345 adxl;
 void setup() {
   Serial.begin(9600);
   adxl.powerOn();
+  
+  pinMode(10, INPUT_PULLUP);
 }
 
 void loop() {
@@ -42,7 +44,7 @@ void loop() {
   Serial.print(' ');
   Serial.print(zAngle);
   Serial.print(' ');
-  Serial.print('0');
+  Serial.print(!digitalRead(10));
   Serial.print(' ');
   Serial.println('0');
   
