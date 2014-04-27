@@ -32,11 +32,14 @@ abstract class Mode implements SerialPortEventListener{
 						String[] dataStrings = new String(slice).split(" ");
 						bufferPointer = 0;
 
-						if (dataStrings.length < 10) continue;
+						if (dataStrings.length != 10) continue;
 						SensorData data = new SensorData();
+
 						data.aX = Integer.parseInt(dataStrings[2]);
 						data.aY = Integer.parseInt(dataStrings[3]);
 						data.aZ = Integer.parseInt(dataStrings[4]);
+
+						data.index = Integer.parseInt(dataStrings[8]) == 1;
 						process(data);
 					}
 				}
