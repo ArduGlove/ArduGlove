@@ -18,6 +18,8 @@ public class Main {
 	@Parameter(names = {"-h", "--help"}, help = true, hidden = true)
 	boolean help;
 
+	SerialParser parser;
+
 	public static void main(String[] args) {
 		Main main = new Main();
 		JCommander jc = new JCommander(main, args);
@@ -51,7 +53,7 @@ public class Main {
 
 		Mode mode = null;
 		switch (modeName) {
-			case "mouse": mode = new MouseMode(port); break;
+			case "mouse": mode = new MouseMode(); break;
 		}
 		if (mode == null) {
 			JOptionPane.showMessageDialog(null, "Invalid mode switch");
@@ -59,9 +61,7 @@ public class Main {
 		}
 
 		try {
-			port.openPort();
-			port.setParams(19200, 8, 1, 0);
-			port.addEventListener(mode, SerialPort.MASK_RXCHAR);
+			parser = new SerialParser(port, mode);
 		} catch (SerialPortException e) {
 			e.printStackTrace();
 		}

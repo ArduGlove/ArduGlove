@@ -1,7 +1,5 @@
 package org.arduglove.mkinterface;
 
-import jssc.SerialPort;
-
 import java.awt.*;
 import java.awt.event.InputEvent;
 
@@ -17,8 +15,7 @@ public class MouseMode extends Mode {
 	int remX = 0;
 	int remY = 0;
 
-	public MouseMode(SerialPort port) {
-		super(port);
+	public MouseMode() {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
