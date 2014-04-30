@@ -12,7 +12,7 @@ public class Main {
 	@Parameter(names = { "-p", "--port"}, description = "Port name")
 	String portName;
 
-	@Parameter(names = {"-m", "--mode"}, description = "Mode of input generation")
+	@Parameter(names = {"-m", "--mode"}, description = "Mode of input generation. Available modes: mouse, arrow, wasd")
 	String modeName = "mouse";
 
 	@Parameter(names = {"-h", "--help"}, help = true, hidden = true)
@@ -54,6 +54,8 @@ public class Main {
 		Mode mode = null;
 		switch (modeName) {
 			case "mouse": mode = new MouseMode(); break;
+			case "arrow": mode = new ArrowKeyMode(); break;
+			case "wasd": mode = new WasdKeyMode(); break;
 		}
 		if (mode == null) {
 			JOptionPane.showMessageDialog(null, "Invalid mode switch");

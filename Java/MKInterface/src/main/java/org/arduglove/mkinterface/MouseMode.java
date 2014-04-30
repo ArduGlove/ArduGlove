@@ -7,22 +7,11 @@ import java.awt.event.InputEvent;
  * Mouse simulation mode
  */
 public class MouseMode extends Mode {
-	Robot robot;
-
 	boolean mousePressed = false;
 
 	int div = 50;
 	int remX = 0;
 	int remY = 0;
-
-	public MouseMode() {
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
 
 	@Override
 	void process(SensorData data) {
