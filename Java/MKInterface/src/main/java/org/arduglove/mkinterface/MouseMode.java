@@ -37,8 +37,8 @@ public class MouseMode extends Mode {
 
 		if (mouse.x < 0) mouse.x = 0;
 		if (mouse.y < 0) mouse.y = 0;
-		if (mouse.x > screen.width) mouse.x = screen.width;
-		if (mouse.y > screen.height) mouse.y = screen.height;
+		if (mouse.x >= screen.width) mouse.x = screen.width - 1;
+		if (mouse.y >= screen.height) mouse.y = screen.height - 1;
 
 		if (Math.abs(data.aX) > 15 || Math.abs(data.aY) > 15) {
 			robot.mouseMove(mouse.x, mouse.y);
