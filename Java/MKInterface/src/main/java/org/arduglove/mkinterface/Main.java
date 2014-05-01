@@ -81,7 +81,7 @@ public class Main {
 		System.setProperty("apple.awt.UIElement", "true");
 		SystemTray tray = SystemTray.getSystemTray();
 
-		Image image = Toolkit.getDefaultToolkit().getImage("/Users/erik/Documents/Java/misc/trayicon.png");
+		Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/trayicon.png"));
 		PopupMenu popup = new PopupMenu();
 		Menu modes = new Menu("Modes");
 
