@@ -33,7 +33,7 @@ public class SerialParser implements SerialPortEventListener{
 
 					if (buffer[bufferPointer-1] == (byte) '\n') {
 						byte[] slice = Arrays.copyOfRange(buffer, 0, bufferPointer - 1);
-						String[] dataStrings = new String(slice).split(" ");
+						String[] dataStrings = new String(slice).trim().split(" ");
 						bufferPointer = 0;
 
 						if (dataStrings.length != 10) continue;
@@ -44,6 +44,7 @@ public class SerialParser implements SerialPortEventListener{
 						data.aZ = Integer.parseInt(dataStrings[4]);
 
 						data.index = Integer.parseInt(dataStrings[8]) == 1;
+						data.middleFlex = Integer.parseInt(dataStrings[9]);
 						mode.process(data);
 					}
 				}

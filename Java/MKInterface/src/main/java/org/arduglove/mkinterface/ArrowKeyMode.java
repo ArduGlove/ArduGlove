@@ -10,6 +10,8 @@ public class ArrowKeyMode extends Mode {
 
 	KeyPressManager index = new KeyPressManager(KeyEvent.VK_SPACE);
 
+	KeyPressManager middleFlex = new KeyPressManager(KeyEvent.VK_D);
+
 	int deadZone = 50;
 
 	@Override
@@ -25,6 +27,8 @@ public class ArrowKeyMode extends Mode {
 		down.update(data.aX > deadZone);
 
 		index.update(data.index);
+
+		middleFlex.update(data.middleFlex < 400);
 	}
 
 	class KeyPressManager {

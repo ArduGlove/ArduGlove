@@ -12,11 +12,15 @@ float angleX = 0;
 float angleY = 0;
 float angleZ = 0;
 
+boolean index = false;
+
+int middleFlex = 680;
+
 void setup() {
   size(600, 600, P3D);
   
   println(Serial.list());
-  myPort = new Serial(this, Serial.list()[4], 19200);
+  myPort = new Serial(this, Serial.list()[5], 19200);
   myPort.bufferUntil('\n');
   
   //noFill();
@@ -30,28 +34,34 @@ void draw() {
   rotateY(median(xValues));
   rotateZ(0 - median(yValues));
   
+  float handFlex = 0 -((middleFlex - 680) / 600.0);
+  
   //rotateY(mouseX/((float) width));
   boxAt(0, 0, 110, 40, 220, 220);
   boxAt(0, -140, 90, 40, 40, 60);
+  if (index) fill(255, 0, 0);
   boxAt(0, -140, 30, 40, 40, 60);
+  fill(255);
   rotateX(radians(-45));
   boxAt(0, -180, 0, 40, 40, 60);
   rotateX(radians(45));
-  rotateY(mouseY/((float) height));
+  rotateY(handFlex);
   boxAt(0, 30, -40, 40, 40, 60);
   boxAt(0, -30, -40, 40, 40, 60);
   boxAt(0, 90, -40, 40, 40, 60);
   boxAt(0, -90, -40, 40, 40, 60);
-  rotateY(mouseY/((float) height));
+  rotateY(handFlex);
   boxAt(0, 30, -100, 40, 40, 60);
   boxAt(0, -30, -100, 40, 40, 60);
   boxAt(0, 90, -100, 40, 40, 60);
   boxAt(0, -90, -100, 40, 40, 60);
-  rotateY(mouseY/((float) height));
+  rotateY(handFlex);
   boxAt(0, 30, -160, 40, 40, 60);
   boxAt(0, -30, -160, 40, 40, 60);
   boxAt(0, 90, -160, 40, 40, 60);
+  if (index) fill(255, 0, 0);
   boxAt(0, -90, -160, 40, 40, 60);
+  fill(255);
 }
 
 void boxAt(int x, int y, int z, int w, int h, int d) {
@@ -77,8 +87,8 @@ void serialEvent(Serial myPort) {
     angleX = float(data[5]);
     angleY = float(data[6]);
     angleZ = float(data[7]);
-    //zButton = boolean(int(data[8]));
-    //cButton = boolean(int(data[9]));
+    index = boolean(int(data[8]));
+    middleFlex = int(data[9]);
     
     if (++yValuesPointer > yValues.length-1) yValuesPointer = 0;
     yValues[yValuesPointer] = angleY;

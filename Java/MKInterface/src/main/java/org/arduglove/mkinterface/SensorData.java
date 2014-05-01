@@ -8,5 +8,7 @@ public class SensorData {
 	boolean index, middle, ring, pinky;
 	boolean swipeL, swipeR;
 
+	int indexFlex, middleFlex;
+
 	double angX, angY, angZ;
 }

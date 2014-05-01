@@ -46,7 +46,7 @@ void loop() {
   Serial.print(' ');
   Serial.print(!digitalRead(10));
   Serial.print(' ');
-  Serial.println('0');
+  Serial.println(analogRead(A9));
   
   delay(2);
  
