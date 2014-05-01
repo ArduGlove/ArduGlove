@@ -1,9 +1,3 @@
-*.class
-*.jar
-*.iml
-
-.DS_Store
-
 .idea/
 .gradle/
 build/
