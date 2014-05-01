@@ -7,6 +7,8 @@ import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Main {
 	@Parameter(names = { "-p", "--port"}, description = "Port name")
@@ -32,6 +34,8 @@ public class Main {
 }
 
 	private void handler() {
+		if (isMac()) createMacGUI();
+
 		if (portName == null) {
 			String[] choices = SerialPortList.getPortNames();
 			if (choices.length == 0) {
@@ -51,12 +55,7 @@ public class Main {
 
 		SerialPort port = new SerialPort(portName);
 
-		Mode mode = null;
-		switch (modeName) {
-			case "mouse": mode = new MouseMode(); break;
-			case "arrow": mode = new ArrowKeyMode(); break;
-			case "wasd": mode = new WasdKeyMode(); break;
-		}
+		Mode mode = getMode(modeName);
 		if (mode == null) {
 			JOptionPane.showMessageDialog(null, "Invalid mode switch");
 			System.exit(0);
@@ -67,5 +66,56 @@ public class Main {
 		} catch (SerialPortException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static Mode getMode(String name) {
+		switch (name.toLowerCase()) {
+			case "mouse": return new MouseMode();
+			case "arrow": return new ArrowKeyMode();
+			case "wasd": return new WasdKeyMode();
+		}
+		return null;
+	}
+
+	private void createMacGUI() {
+		System.setProperty("apple.awt.UIElement", "true");
+		SystemTray tray = SystemTray.getSystemTray();
+
+		Image image = Toolkit.getDefaultToolkit().getImage("/Users/erik/Documents/Java/misc/trayicon.png");
+		PopupMenu popup = new PopupMenu();
+		Menu modes = new Menu("Modes");
+
+		String[] modeStrings = {"Mouse", "Arrow", "WASD"};
+
+		for (final String s : modeStrings) {
+			MenuItem m = new MenuItem(s);
+			m.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					parser.setMode(getMode(s));
+				}
+			});
+			modes.add(m);
+		}
+
+		popup.add(modes);
+		MenuItem quit = new MenuItem("Quit");
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		popup.add(quit);
+		TrayIcon icon = new TrayIcon(image, "ArduGlove", popup);
+
+		try {
+			tray.add(icon);
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static boolean isMac() {
+		return System.getProperty("os.name").startsWith("Mac");
 	}
 }

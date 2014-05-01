@@ -20,8 +20,6 @@ public class MouseMode extends Mode {
 		data.aX -= 25;
 		data.aY -= 85;
 
-		System.out.printf("\r %6d %6d %6d   ", data.aX, data.aY, data.aZ);
-
 		Point mouse = MouseInfo.getPointerInfo().getLocation();
 		Rectangle screen = MouseInfo.getPointerInfo().getDevice().getDefaultConfiguration().getBounds();
 
