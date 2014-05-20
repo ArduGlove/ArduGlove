@@ -14,8 +14,8 @@ public class Main {
 	@Parameter(names = { "-p", "--port"}, description = "Port name")
 	String portName;
 
-	@Parameter(names = {"-m", "--mode"}, description = "Mode of input generation. Available modes: mouse, arrow, wasd")
-	String modeName = "mouse";
+    @Parameter(names = {"-m", "--mode"}, description = "Mode of input generation. Available modes: mouse, pointer, arrow, wasd")
+    String modeName = "mouse";
 
 	@Parameter(names = {"-h", "--help"}, help = true, hidden = true)
 	boolean help;
@@ -71,6 +71,7 @@ public class Main {
 	private static Mode getMode(String name) {
 		switch (name.toLowerCase()) {
 			case "mouse": return new MouseMode();
+            case "pointer": return new PointerMode();
 			case "arrow": return new ArrowKeyMode();
 			case "wasd": return new WasdKeyMode();
 		}
