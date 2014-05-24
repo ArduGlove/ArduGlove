@@ -72,11 +72,11 @@ void draw() {
   text(angleY, 50, 40);
   
   fill(255,0,0);
-  text(accelX, 50, 60);
+  text("X:"+accelX, 50, 60);
   fill(0,255,0);
-  text(accelY, 50, 80);
+  text("Y"+accelY, 50, 80);
   fill(50,50,255);
-  text(accelZ, 50, 100);
+  text("Z"+accelZ, 50, 100);
   fill(255,255,0);
   text(middleFlex, 50, 120);
   
