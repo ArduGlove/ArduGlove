@@ -5,6 +5,11 @@
 RF24 radio(9,10);
 
 void setup() {
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, LOW);
+  
   Serial.begin(38400);
   
   radio.begin();
@@ -22,7 +27,7 @@ void loop() {
   while (radio.available()) {
     radio.read(&buffer, sizeof(int16_t [16]));
   }
-  
+  /*
   Serial.write(buffer[0]);
   Serial.write(buffer[1]);
   Serial.write(buffer[2]);
@@ -47,9 +52,9 @@ void loop() {
   Serial.write(bitRead(buffer[14], 7));
   Serial.write(buffer[15]);
   Serial.println();
+  */
   
-  /*
-    Serial.print(buffer[0]);
+  Serial.print(buffer[0]);
   Serial.print(' ');
   Serial.print(buffer[1]);
   Serial.print(' ');
@@ -95,5 +100,5 @@ void loop() {
   Serial.print(' ');
   Serial.print(buffer[15]);
   Serial.println(' ');
-  */
+  
 }

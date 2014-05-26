@@ -20,6 +20,11 @@ int16_t buttons = 0;
 
 int16_t packet = 0;
 
+unsigned long starttime = 0;
+unsigned long stoptime = 0;
+
+int16_t time = 0;
+
 void setup() {
   radio.begin();
   radio.setAutoAck(1);
@@ -40,7 +45,8 @@ void setup() {
 }
 
 void loop() {
-  accelgyro.getMotion9(&ax, &ay, &az, &gx, &gy, &gz, &mx, &my, &mz);
+  //accelgyro.getMotion9(&ax, &ay, &az, &gx, &gy, &gz, &mx, &my, &mz);
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   
   flexa = analogRead(A0);
   flexb = analogRead(A1);
@@ -60,6 +66,7 @@ void loop() {
   packet++;
   packet = packet % 1000;
   
+  
   int16_t buffer [] = {
       ax, ay, az,
       gx, gy, gz,
@@ -69,7 +76,9 @@ void loop() {
       buttons,
       packet};
   
+  
+  
   radio.write(&buffer, sizeof(int16_t [16]));
   
-  delay(10);
+  //delay(10);
 }
