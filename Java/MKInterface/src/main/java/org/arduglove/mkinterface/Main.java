@@ -86,7 +86,7 @@ public class Main {
 		PopupMenu popup = new PopupMenu();
 		Menu modes = new Menu("Modes");
 
-		String[] modeStrings = {"Mouse", "Arrow", "WASD"};
+		String[] modeStrings = {"Mouse", "Pointer", "Arrow", "WASD"};
 
 		for (final String s : modeStrings) {
 			MenuItem m = new MenuItem(s);
