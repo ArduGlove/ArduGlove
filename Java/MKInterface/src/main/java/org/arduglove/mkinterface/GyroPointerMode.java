@@ -8,20 +8,7 @@ import java.awt.event.InputEvent;
  * unlike MouseMode, which uses the position of the glove to determine cursor direction.
  */
 public class GyroPointerMode extends Mode {
-    int lowest = 100;     // Sensor value of lowest (Y) position of cursor
-    int highest = -100;   // Sensor value of highest (Y) position of cursor
-    int leftmost = -50;   // Sensor value of leftmost (X) position of cursor
-    int rightmost = -250; // Sensor value of rightmost (X) position of cursor
-
-    int threshold = 2;    // Anti jitter threshold. Higher gives less jitter, but is less precise
-
     boolean mousePressed = false;
-    int[] xValues = new int[21];
-    int[] yValues = new int[21];
-    int xValuesIndex = 0;
-    int yValuesIndex = 0;
-    int lastMedianX = 0;
-    int lastMedianY = 0;
 
     Rectangle screen = MouseInfo.getPointerInfo().getDevice().getDefaultConfiguration().getBounds();
 
@@ -34,12 +21,6 @@ public class GyroPointerMode extends Mode {
 
     @Override
     void process(SensorData data) {
-        lowest = data.oneG / 2;
-        highest = data.oneG / -2;
-        leftmost = data.oneG * -1;
-        rightmost = data.oneG / 2;
-
-        System.out.println("X:"+data.gX+"\tY:"+data.gY+"\tZ:" + data.gZ);
 
         // Calculate new X position based on gyro data
         Point mouse = MouseInfo.getPointerInfo().getLocation();
