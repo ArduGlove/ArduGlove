@@ -14,7 +14,7 @@ public class Main {
 	@Parameter(names = { "-p", "--port"}, description = "Port name")
 	String portName;
 
-    @Parameter(names = {"-m", "--mode"}, description = "Mode of input generation. Available modes: mouse, pointer, arrow, wasd")
+    @Parameter(names = {"-m", "--mode"}, description = "Mode of input generation. Available modes: mouse, pointer, gyro, arrow, wasd")
     String modeName = "mouse";
 
 	@Parameter(names = {"-h", "--help"}, help = true, hidden = true)
@@ -72,6 +72,7 @@ public class Main {
 		switch (name.toLowerCase()) {
 			case "mouse": return new MouseMode();
             case "pointer": return new PointerMode();
+            case "gyro": return new GyroPointerMode();
 			case "arrow": return new ArrowKeyMode();
 			case "wasd": return new WasdKeyMode();
 		}
@@ -86,7 +87,7 @@ public class Main {
 		PopupMenu popup = new PopupMenu();
 		Menu modes = new Menu("Modes");
 
-		String[] modeStrings = {"Mouse", "Pointer", "Arrow", "WASD"};
+		String[] modeStrings = {"Mouse", "Pointer", "GyroPointer", "Arrow", "WASD"};
 
 		for (final String s : modeStrings) {
 			MenuItem m = new MenuItem(s);
