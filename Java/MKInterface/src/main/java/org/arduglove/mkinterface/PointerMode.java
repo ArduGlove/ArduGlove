@@ -53,8 +53,8 @@ public class PointerMode extends Mode {
         lastMedianX = medianX;
         lastMedianY = medianY;
 
-        int posX = map(medianX, leftmost, rightmost, 0, screen.width-1);
-        int posY = map(medianY, lowest, highest, screen.height-1, 0);
+        int posX = mapWithinBounds(medianX, leftmost, rightmost, 0, screen.width-1);
+        int posY = mapWithinBounds(medianY, lowest, highest, screen.height-1, 0);
 
         robot.mouseMove(posX, posY);
 
@@ -78,7 +78,7 @@ public class PointerMode extends Mode {
      * @param toHigh    the upper bound of the value's target range
      * @return          The mapped value. Will always be within toLow/toHigh bounds
      */
-    private int map(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
+    private int mapWithinBounds(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
         // Ensure value is not lower than fromLow bounds
         if ( (fromLow < fromHigh && value < fromLow) || (fromLow > fromHigh && value > fromLow) ) return toLow;
         // Ensure value is not higher than fromHigh bounds
@@ -86,5 +86,4 @@ public class PointerMode extends Mode {
         // Calculate re-mapped number
         else return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
     }
-
 }

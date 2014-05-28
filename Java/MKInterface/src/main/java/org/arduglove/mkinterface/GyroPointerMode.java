@@ -56,7 +56,7 @@ public class GyroPointerMode extends Mode {
      * @param fromHigh  the upper bound of the value's current range
      * @param toLow     the lower bound of the value's target range
      * @param toHigh    the upper bound of the value's target range
-     * @return          The mapped value. Will always be within toLow/toHigh bounds
+     * @return          The mapped value. Can be outside toLow/toHigh bounds
      */
     private int map(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
         return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
