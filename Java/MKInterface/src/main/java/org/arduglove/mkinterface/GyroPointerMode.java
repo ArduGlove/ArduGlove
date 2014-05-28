@@ -4,8 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 
 /**
- * Mouse simulation mode, using the position of the glove to determine cursor position,
- * unlike MouseMode, which uses the position of the glove to determine cursor direction.
+ * "GyroMouse" simulation mode, using the rotation from gyroscope data to determine mouse cursor movement.
  */
 public class GyroPointerMode extends Mode {
     boolean mousePressed = false;
@@ -14,15 +13,15 @@ public class GyroPointerMode extends Mode {
 
     int gyroLow = 0;
     int gyroHigh = -16000;
-    int gyroSensitivityX = screen.width/10;  // higher value gives more sensitivity
+    int gyroSensitivityX = screen.width/10;  // Higher value gives more sensitivity
     int gyroSensitivityY = screen.height/10;
-    int gyroThresholdX = 600;
+    int gyroThresholdX = 600;                // Values lower than the threshold are ignored
     int gyroThresholdY = 800;
 
     @Override
     void process(SensorData data) {
 
-        // Calculate new X position based on gyro data
+        // Calculate new X and Y position based on gyro data
         Point mouse = MouseInfo.getPointerInfo().getLocation();
         int distanceX = 0;
         int distanceY = 0;
@@ -30,13 +29,12 @@ public class GyroPointerMode extends Mode {
         if ( Math.abs(data.gX) > gyroThresholdY ) distanceY = map(data.gX, gyroLow, -gyroHigh, 0, gyroSensitivityY);
         int posX = mouse.x + distanceX;
         int posY = mouse.y + distanceY;
+
+        // Don't allow mouse to go outside screen bounds
         if ( posX > screen.width ) posX = screen.width-1;
         if ( posY > screen.height ) posY = screen.height-1;
-
         if ( posX < 0 ) posX = 0;
         if ( posY < 0 ) posY = 0;
-
-        //int posY = mapWithinBounds(medianY, lowest, highest, screen.height-1, 0);
 
         robot.mouseMove(posX, posY);
 
@@ -59,18 +57,6 @@ public class GyroPointerMode extends Mode {
      * @param toLow     the lower bound of the value's target range
      * @param toHigh    the upper bound of the value's target range
      * @return          The mapped value. Will always be within toLow/toHigh bounds
-     */
-    private int mapWithinBounds(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
-        // Ensure value is not lower than fromLow bounds
-        if ( (fromLow < fromHigh && value < fromLow) || (fromLow > fromHigh && value > fromLow) ) return toLow;
-            // Ensure value is not higher than fromHigh bounds
-        else if ( (fromHigh > fromLow && value > fromHigh) || (fromHigh < fromLow && value < fromHigh) ) return toHigh;
-            // Calculate re-mapped number
-        else return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
-    }
-
-    /**
-     *
      */
     private int map(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
         return toLow + (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow);
