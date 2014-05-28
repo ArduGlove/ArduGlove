@@ -28,6 +28,11 @@ public class PointerMode extends Mode {
 
     @Override
     void process(SensorData data) {
+		lowest = data.oneG / 2;
+		highest = data.oneG / -2;
+		leftmost = data.oneG * -1;
+		rightmost = data.oneG / 2;
+
         // Update array of the last measured values
         if (++xValuesIndex >= xValues.length) xValuesIndex = 0;
         if (++yValuesIndex >= yValues.length) yValuesIndex = 0;
