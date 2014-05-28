@@ -5,7 +5,7 @@
 ADXL345 adxl;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(38400);
   adxl.powerOn();
   
   pinMode(10, INPUT_PULLUP);
@@ -48,6 +48,6 @@ void loop() {
   Serial.print(' ');
   Serial.println(analogRead(A9));
   
-  delay(2);
+  delay(4);
  
 }

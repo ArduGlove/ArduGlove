@@ -5,10 +5,14 @@ public class SensorData {
 	int gX, gY, gZ; // Gyroscope
 	int cX, cY, cZ; // Compass
 
+	int oneG;
+
 	boolean index, middle, ring, pinky;
 	boolean swipeL, swipeR;
 
-	int indexFlex, middleFlex;
+	int indexFlex, middleFlex, ringFlex, thumbFlex;
 
 	double angX, angY, angZ;
+
+	int packet;
 }

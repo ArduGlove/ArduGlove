@@ -31,8 +31,8 @@ public class PointerMode extends Mode {
         // Update array of the last measured values
         if (++xValuesIndex >= xValues.length) xValuesIndex = 0;
         if (++yValuesIndex >= yValues.length) yValuesIndex = 0;
-        xValues[xValuesIndex] = data.aY;
-        yValues[yValuesIndex] = data.aX;
+        xValues[xValuesIndex] = data.aX;
+        yValues[yValuesIndex] = data.aY;
 
         // Get median value of last measured values
         int[] sortedX = xValues.clone();
@@ -48,7 +48,6 @@ public class PointerMode extends Mode {
         lastMedianX = medianX;
         lastMedianY = medianY;
 
-        // X value from sensor corresponds to Y value on screen, and vice versa
         int posX = map(medianX, leftmost, rightmost, 0, screen.width-1);
         int posY = map(medianY, lowest, highest, screen.height-1, 0);
 

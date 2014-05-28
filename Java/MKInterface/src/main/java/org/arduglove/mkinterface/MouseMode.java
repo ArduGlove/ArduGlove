@@ -15,23 +15,25 @@ public class MouseMode extends Mode {
 
 	@Override
 	void process(SensorData data) {
-		data.aX *= -1;
 		data.aY *= -1;
-		data.aX -= 25;
-		data.aY -= 85;
+		//data.aY -= 25;
+		//data.aX -= 85;
+
+		div = data.oneG / 5;
+		int deadZone = div / 3;
 
 		Point mouse = MouseInfo.getPointerInfo().getLocation();
 		Rectangle screen = MouseInfo.getPointerInfo().getDevice().getDefaultConfiguration().getBounds();
 
-		int deltaX = data.aY / div + remX / div;
-		int deltaY = data.aX / div + remY / div;
+		int deltaX = data.aX / div + remX / div;
+		int deltaY = data.aY / div + remY / div;
 
 		if (remX > div) remX -= div;
 		if (remX < -div) remX += div;
 		if (remY > div) remY -= div;
 		if (remY < -div) remY += div;
-		remX += data.aY % div;
-		remY += data.aX % div;
+		remX += data.aX % div;
+		remY += data.aY % div;
 
 		mouse.translate(deltaX, deltaY);
 
@@ -40,7 +42,7 @@ public class MouseMode extends Mode {
 		if (mouse.x >= screen.width) mouse.x = screen.width - 1;
 		if (mouse.y >= screen.height) mouse.y = screen.height - 1;
 
-		if (Math.abs(data.aX) > 15 || Math.abs(data.aY) > 15) {
+		if (Math.abs(data.aX) > deadZone || Math.abs(data.aY) > deadZone) {
 			robot.mouseMove(mouse.x, mouse.y);
 		}
 

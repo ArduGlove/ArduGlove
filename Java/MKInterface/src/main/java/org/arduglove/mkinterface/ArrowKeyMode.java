@@ -16,15 +16,14 @@ public class ArrowKeyMode extends Mode {
 
 	@Override
 	void process(SensorData data) {
-		data.aX *= -1;
 		data.aY *= -1;
-		data.aX -= 25;
-		data.aY -= 85;
+		//data.aX -= 25;
+		//data.aY -= 85;
 
-		left.update(data.aY < -1 * deadZone);
-		right.update(data.aY > deadZone);
-		up.update(data.aX < -1 * deadZone);
-		down.update(data.aX > deadZone);
+		left.update(data.aX < -1 * deadZone);
+		right.update(data.aX > deadZone);
+		up.update(data.aY < -1 * deadZone);
+		down.update(data.aY > deadZone);
 
 		index.update(data.index);
 
