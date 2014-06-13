@@ -27,33 +27,11 @@ void loop() {
   while (radio.available()) {
     radio.read(&buffer, sizeof(int16_t [16]));
   }
-  /*
-  Serial.write(buffer[0]);
-  Serial.write(buffer[1]);
-  Serial.write(buffer[2]);
-  Serial.write(buffer[3]);
-  Serial.write(buffer[4]);
-  Serial.write(buffer[5]);
-  Serial.write(buffer[6]);
-  Serial.write(buffer[7]);
-  Serial.write(buffer[8]);
-  Serial.write(buffer[9]);
-  Serial.write(buffer[10]);
-  Serial.write(buffer[11]);
-  Serial.write(buffer[12]);
-  Serial.write(buffer[13]);
-  Serial.write(bitRead(buffer[14], 0));
-  Serial.write(bitRead(buffer[14], 1));
-  Serial.write(bitRead(buffer[14], 2));
-  Serial.write(bitRead(buffer[14], 3));
-  Serial.write(bitRead(buffer[14], 4));
-  Serial.write(bitRead(buffer[14], 5));
-  Serial.write(bitRead(buffer[14], 6));
-  Serial.write(bitRead(buffer[14], 7));
-  Serial.write(buffer[15]);
-  Serial.println();
-  */
   
+  Serial.print(' ');
+  // First character can get corrupted by previous data,
+  // make sure we have an extra to trim
+  Serial.print(' ');
   Serial.print(buffer[0]);
   Serial.print(' ');
   Serial.print(buffer[1]);
