@@ -9,16 +9,15 @@ public class ArrowKeyMode extends Mode {
 	KeyPressManager down = new KeyPressManager(KeyEvent.VK_DOWN);
 
 	KeyPressManager index = new KeyPressManager(KeyEvent.VK_SPACE);
-
-	KeyPressManager middleFlex = new KeyPressManager(KeyEvent.VK_D);
+	KeyPressManager middle = new KeyPressManager(KeyEvent.VK_D);
+	KeyPressManager ring = new KeyPressManager(KeyEvent.VK_A);
+	KeyPressManager pinky = new KeyPressManager(KeyEvent.VK_W);
 
 	int deadZone = 50;
 
 	@Override
 	void process(SensorData data) {
-		data.aY *= -1;
-		//data.aX -= 25;
-		//data.aY -= 85;
+		deadZone = data.oneG / 5;
 
 		left.update(data.aX < -1 * deadZone);
 		right.update(data.aX > deadZone);
@@ -26,27 +25,8 @@ public class ArrowKeyMode extends Mode {
 		down.update(data.aY > deadZone);
 
 		index.update(data.index);
-
-		middleFlex.update(data.middleFlex < 400);
-	}
-
-	class KeyPressManager {
-		int key;
-		boolean pressed;
-
-		KeyPressManager(int key) {
-			this.key = key;
-		}
-
-		void update(boolean shouldBePressed) {
-			if (shouldBePressed && !pressed) {
-				robot.keyPress(key);
-				pressed = true;
-			}
-			if (!shouldBePressed && pressed) {
-				robot.keyRelease(key);
-				pressed = false;
-			}
-		}
+		middle.update(data.middle);
+		ring.update(data.ring);
+		pinky.update(data.pinky);
 	}
 }

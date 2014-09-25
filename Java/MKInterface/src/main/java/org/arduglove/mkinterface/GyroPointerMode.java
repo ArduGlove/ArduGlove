@@ -7,7 +7,7 @@ import java.awt.event.InputEvent;
  * "GyroMouse" simulation mode, using the rotation from gyroscope data to determine mouse cursor movement.
  */
 public class GyroPointerMode extends Mode {
-    boolean mousePressed = false;
+	MousePressManager leftMouse = new MousePressManager(InputEvent.BUTTON1_DOWN_MASK);
 
     Rectangle screen = MouseInfo.getPointerInfo().getDevice().getDefaultConfiguration().getBounds();
 
@@ -38,14 +38,7 @@ public class GyroPointerMode extends Mode {
 
         robot.mouseMove(posX, posY);
 
-        if (data.index && !mousePressed) {
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            mousePressed = true;
-        }
-        if (!data.index && mousePressed) {
-            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            mousePressed = false;
-        }
+		leftMouse.update(data.index);
     }
 
     /**

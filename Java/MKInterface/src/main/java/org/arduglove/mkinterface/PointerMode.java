@@ -16,7 +16,8 @@ public class PointerMode extends Mode {
 
     int threshold = 2;    // Anti jitter threshold. Higher gives less jitter, but is less precise
 
-    boolean mousePressed = false;
+	MousePressManager leftMouse = new MousePressManager(InputEvent.BUTTON1_DOWN_MASK);
+
     int[] xValues = new int[21];
     int[] yValues = new int[21];
     int xValuesIndex = 0;
@@ -58,14 +59,7 @@ public class PointerMode extends Mode {
 
         robot.mouseMove(posX, posY);
 
-        if (data.index && !mousePressed) {
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            mousePressed = true;
-        }
-        if (!data.index && mousePressed) {
-            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            mousePressed = false;
-        }
+		leftMouse.update(data.index);
     }
 
     /**

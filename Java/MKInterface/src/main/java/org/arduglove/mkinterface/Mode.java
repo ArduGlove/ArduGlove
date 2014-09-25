@@ -15,4 +15,46 @@ abstract class Mode {
 	}
 
 	abstract void process(SensorData data);
+
+	class KeyPressManager {
+		int key;
+		boolean pressed;
+
+		KeyPressManager(int key) {
+			this.key = key;
+		}
+
+		void update(boolean shouldBePressed) {
+			if (shouldBePressed && !pressed) {
+				robot.keyPress(key);
+				pressed = true;
+			}
+			if (!shouldBePressed && pressed) {
+				robot.keyRelease(key);
+				pressed = false;
+			}
+		}
+	}
+
+	class MousePressManager {
+		int button;
+		boolean pressed;
+		long lastPress;
+
+		MousePressManager(int button) {
+			this.button = button;
+		}
+
+		void update(boolean shouldBePressed) {
+			if (shouldBePressed && !pressed) {
+				robot.mousePress(button);
+				pressed = true;
+				lastPress = System.currentTimeMillis();
+			}
+			if (!shouldBePressed && pressed) {
+				robot.mouseRelease(button);
+				pressed = false;
+			}
+		}
+	}
 }

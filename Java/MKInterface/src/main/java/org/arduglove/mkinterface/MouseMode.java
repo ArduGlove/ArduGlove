@@ -7,9 +7,8 @@ import java.awt.event.InputEvent;
  * Mouse simulation mode
  */
 public class MouseMode extends Mode {
-	boolean mousePressed = false;
-	boolean rightMousePressed = false;
-	long mousePressedLast;
+	MousePressManager leftMouse = new MousePressManager(InputEvent.BUTTON1_DOWN_MASK);
+	MousePressManager rightMouse = new MousePressManager(InputEvent.BUTTON3_DOWN_MASK);
 
 	int div = 50;
 	double remX = 0;
@@ -20,8 +19,6 @@ public class MouseMode extends Mode {
 	@Override
 	void process(SensorData data) {
 		data.aY *= -1;
-		//data.aY -= 25;
-		//data.aX -= 85;
 
 		div = data.oneG / 5;
 
@@ -49,30 +46,13 @@ public class MouseMode extends Mode {
 			if(mouse.y >= screen.y + screen.height) mouse.y = screen.y + screen.height - 1;
 		}
 
-		if (data.index && !mousePressed) {
-			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			mousePressed = true;
-			mousePressedLast = System.currentTimeMillis();
-		}
+		leftMouse.update(data.index);
+		rightMouse.update(data.middle);
 
-		if (!data.index && mousePressed) {
-			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			mousePressed = false;
-		}
-
-		if (data.middle && !rightMousePressed) {
-			robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
-			rightMousePressed = true;
-			mousePressedLast = System.currentTimeMillis();
-		}
-
-		if (!data.middle && rightMousePressed) {
-			robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
-			rightMousePressed = false;
-		}
+		long lastPress = leftMouse.lastPress > rightMouse.lastPress ? leftMouse.lastPress : rightMouse.lastPress;
 
 		// Freeze mouse long enough to double-click
-		if (System.currentTimeMillis() - mousePressedLast > 300) {
+		if (System.currentTimeMillis() - lastPress > 300) {
 			robot.mouseMove(mouse.x, mouse.y);
 		}
 
